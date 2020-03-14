@@ -5,6 +5,11 @@ Created on Sat Mar 14 09:39:25 2020
 
 @author: devalfa
 """
+
+import random
+import networkx as nx
+
+import matplotlib.pyplot as plt
 SUS = 100
 TOINF = 101
 INF = 102
@@ -14,11 +19,9 @@ TOREC = 105
 REC = 106
 prob_infects = [0.3, 0.3, 0.4, 0.5, 0.6, 0.6, 0.6, 0.6, 0.7, 0.8, 0.8, 0.9, 0.9, 1]
 prob_symptoms = [0.01, 0.11, 0.26, 0.46, 0.86, 0.92, 0.94, 0.95, 0.96, 0.98, 0.99, 0.99, 0.99, 1]
-prob_stay_in = [1 for x in range(14)]
-import random
-import networkx as nx
+prob_stay_in = [random.uniform(0, 1)*0.5 for x in range(14)]
+prob_inf_in = [0.1 for x in range(14)]
 
-import matplotlib.pyplot as plt
 
 
 
@@ -53,7 +56,7 @@ class node:
             if(self.days>13):
                 self.changeState(TOREC)
                 break
-            elif(num<prob_infects[self.days]):
+            elif(num<prob_inf_in[self.days]):
                 nd.changeState(TOINF)
     def quarantine(self):
         num = random.uniform(0, 1)
